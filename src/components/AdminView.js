@@ -1,37 +1,48 @@
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 
-export default function AdminView({ courseData }) {
-    const [courses, setCourses] = useState([]);
+import EditCourse from './EditCourse';
+import ArchiveCourse from './ArchiveCourses';
 
-    // This is to update the courses state whenever courseData changes
+
+export default function AdminView({ coursesData, fetchData }) {
+
+
+    const [courses, setCourses] = useState([])
+
+
+    //Getting the coursesData from the courses page
     useEffect(() => {
-        // This is to map through the courseData and create table rows for each course
-        setCourses(courseData.map(course => (
-            <tr key={course._id}>
-                <td>{course._id}</td>
-                <td>{course.name}</td>
-                <td>{course.description}</td>
-                <td>PHP {course.price}</td>
-                <td className={course.isActive ? "text-success" : "text-danger"}>
-                    {course.isActive ? "Available" : "Unavailable"}
-                </td>
-                <td>
-                    <button className="btn btn-primary">Edit</button>
-                </td>
-                <td>
-                    <button className="btn btn-danger">Archive</button>
-                </td>
-            </tr>
-        )));
-    }, [courseData]); // Dependency array ensures this runs whenever courseData changes
+        console.log(coursesData);
 
-    return (
-        <div className="mt-5 mb-5">
-            <h1 className="text-center mb-4">Admin Dashboard</h1>
+        const coursesArr = coursesData.map(course => {
+            return (
+                <tr key={course._id}>
+                    <td>{course._id}</td>
+                    <td>{course.name}</td>
+                    <td>{course.description}</td>
+                    <td>{course.price}</td>
+                    <td className={course.isActive ? "text-success" : "text-danger"}>
+                        {course.isActive ? "Available" : "Unavailable"}
+                    </td>
+                    <td> <EditCourse course={course} fetchData={fetchData} /> </td> 
+                    <td><ArchiveCourse course={course} isActive={course.isActive} fetchData={fetchData}/></td>
+                </tr>
+                )
+        })
+
+        setCourses(coursesArr)
+
+    }, [coursesData])
+
+
+    return(
+        <>
+            <h1 className="text-center my-4"> Admin Dashboard</h1>
+            
             <Table striped bordered hover responsive>
-                <thead className="text-center">
-                    <tr>
+                <thead>
+                    <tr className="text-center">
                         <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
@@ -40,11 +51,12 @@ export default function AdminView({ courseData }) {
                         <th colSpan="2">Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    {/* Render the courses as table rows */}
                     {courses}
                 </tbody>
-            </Table>
-        </div>
-    );
+            </Table>    
+        </>
+
+        )
 }

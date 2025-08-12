@@ -7,8 +7,7 @@ import {useState, useEffect} from 'react';
 import {UserProvider} from './context/UserContext.js';
 
 import AppNavbar from './components/AppNavbar';
-// import Banner from './components/Banner';
-// import Highlights from './components/Highlights';
+
 import Courses from './pages/Courses';
 import CourseView from './pages/CourseView';
 import Home from './pages/Home';

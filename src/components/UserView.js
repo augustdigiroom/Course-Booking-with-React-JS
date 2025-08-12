@@ -1,19 +1,34 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 import CourseCard from './CourseCard';
+import CourseSearch from './SearchCourse';
 
-export default function UserView({ coursesData }) {
-    const [courses, setCourses] = useState([]);
+export default function UserView({coursesData}) {
+
+    const [courses, setCourses] = useState([])
 
     useEffect(() => {
-        setCourses(coursesData.map(course => (
-            <CourseCard key={course._id} courseProp={course} />
-        )));
-    }, [coursesData]);
+        console.log(coursesData);
 
-    return (
-        <div>
-            <h1>Courses</h1>
-            {courses}
-        </div>
-    );
+        const coursesArr = coursesData.map(course => {
+            //only render the active courses
+            if(course.isActive === true) {
+                return (
+                    <CourseCard courseProp={course} key={course._id}/>
+                    )
+            } else {
+                return null;
+            }
+        })
+
+        //set the courses state to the result of our map function, to bring our returned course component outside of the scope of our useEffect where our return statement below can see.
+        setCourses(coursesArr)
+
+    }, [coursesData])
+
+    return(
+        <>
+            <CourseSearch />
+            { courses }
+        </>
+        )
 }

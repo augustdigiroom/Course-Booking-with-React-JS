@@ -1,33 +1,54 @@
 import { useState, useEffect, useContext } from 'react';
-import CourseCard from '../components/CourseCard';
-import UserContext from '../context/UserContext';
 import AdminView from '../components/AdminView';
+import CourseCard from '../components/CourseCard';
 import UserView from '../components/UserView';
 // import coursesData from '../data/coursesData';
 
+import UserContext from '../context/UserContext';
+
 export default function Courses() {
 
-	const { user } = useContext(UserContext);
+	const {user} = useContext(UserContext);
+
 	const [courses, setCourses] = useState([]);
 
-	useEffect(() => {
-		// get all active courses
-		fetch('http://localhost:4000/courses/')
+	const fetchData = () => {
+
+		let fetchUrl = user.isAdmin === true ? "http://localhost:4000/courses/all" : "http://localhost:4000/courses/"
+
+		fetch(fetchUrl, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		})
 		.then(res => res.json())
 		.then(data => {
 
-			console.log(data);
-			
-			setCourses(data); // Store the fetched data directly
-		});
-			// 	setCourses(data.map(course => {
+			setCourses(data);
+		})
+	}
 
-			// 		return (
-			// 			<CourseCard key={course._id} courseProp={course} />
-			// 		)
-			// 	}))
-			// })
-	}, [])
+	useEffect(() => {
+
+		fetchData();
+
+	}, [user])
+
+	/*useEffect(() => {
+
+        //get all active courses
+        fetch("http://localhost:4000/courses/")
+        .then(res => res.json())
+        .then(data => {
+            
+            console.log(data);
+
+            // Sets the "courses" state to map the data retrieved from the fetch request into several "CourseCard" components
+            setCourses(data);
+
+        });
+
+    }, []);*/
 	// Checks to see if the mock data was captured
 	// console.log(coursesData);
 	// console.log(coursesData[0]);
@@ -42,14 +63,10 @@ export default function Courses() {
 	// })
 
 	return(
-		<>
-			{user.isAdmin ? (
-                // If AdminView if the user is an admin
-                <AdminView courseData={courses} />
-            ) : (
-                // Render UserView if the user is not an admin
-                <UserView coursesData={courses} />
-            )}
-		</>
-	)
+        (user.isAdmin === true)
+        ?
+            <AdminView coursesData={courses} fetchData={fetchData}/>
+        :
+            <UserView coursesData={courses} />
+    )
 }

@@ -15,6 +15,11 @@ export default function Home() {
 		<>
 			<Banner data={data}/>
 			<FeaturedCourses />
+
+			<div className="text-center my-4">
+  					<img src="./codes.jpg" alt="Middle Section" className="img-fluid rounded" />
+			</div>
+
 			<Highlights />
 		</>
 	)
