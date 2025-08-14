@@ -23,7 +23,7 @@ export default function CoursesView(){
 
 	function enroll(courseId){
 
-		fetch("http://localhost:4000/enrollments/enroll", {
+		fetch(`${process.env.REACT_APP_API_URL}/enrollments/enroll`, {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json",

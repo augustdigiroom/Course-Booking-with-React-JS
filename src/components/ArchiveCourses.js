@@ -10,7 +10,7 @@ export default function ArchiveCourse({course, isActive, fetchData}) {
     const [courseId, setCourseId] = useState(course._id);
 
     const archiveToggle = () => {
-        fetch(`http://localhost:4000/courses/${courseId}/archive`, {
+        fetch(`${process.env.REACT_APP_API_URL}/${courseId}/archive`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export default function ArchiveCourse({course, isActive, fetchData}) {
 
 
         const activateToggle = () => {
-        fetch(`http://localhost:4000/courses/${courseId}/activate`, {
+        fetch(`${process.env.REACT_APP_API_URL}/courses/${courseId}/activate`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

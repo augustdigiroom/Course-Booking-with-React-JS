@@ -41,7 +41,7 @@ export default function Register() {
 		// Prevents page redirection via form submission
 		e.preventDefault();
 
-		fetch('http://localhost:4000/users/register',{
+		fetch(`${process.env.REACT_APP_API_URL}/users/register`,{
 
 		method: 'POST',
 		headers: {

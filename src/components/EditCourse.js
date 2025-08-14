@@ -32,7 +32,7 @@
  	const editCourse = (e, courseId) => {
 
  		e.preventDefault();
- 		fetch(`http://localhost:4000/courses/${ courseId }`, {
+ 		fetch(`${process.env.REACT_APP_API_URL}/courses/${ courseId }`, {
  			method: 'PATCH',
  			headers: {
  				'Content-Type': 'application/json',

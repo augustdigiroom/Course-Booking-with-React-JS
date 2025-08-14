@@ -14,7 +14,7 @@ export default function Courses() {
 
 	const fetchData = () => {
 
-		let fetchUrl = user.isAdmin === true ? "http://localhost:4000/courses/all" : "http://localhost:4000/courses/"
+		let fetchUrl = user.isAdmin === true ? `${process.env.REACT_APP_API_URL}/courses/all` : `${process.env.REACT_APP_API_URL}/courses/`
 
 		fetch(fetchUrl, {
 			headers: {

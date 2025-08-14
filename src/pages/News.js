@@ -15,7 +15,7 @@ export default function News() {
 
   // Fetch news data from API
   useEffect(() => {
-    fetch("http://localhost:4000/news/")
+    fetch(`${process.env.REACT_APP_API_URL}/news`)
       .then(res => res.json())
       .then(data => {
         setNews(data);  // Store raw data instead of JSX elements
